@@ -1,20 +1,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
 contract Fweb3Poll {
     IERC20 private _token;
-    address public owner;
     address payable[] yesVoters;
     address payable[] voters;
 
+    string alreadyVotedError = "You already voted";
+    string notEnoughTokensError = "Need 100 FWEB3 tokens to vote";
+
     constructor(IERC20 token) {
-        owner = msg.sender;
         _token = token;
     }
 
-    function hasTokens(address voter) public view returns (bool) {
+    function hasTokens(address voter) private view returns (bool) {
         return _token.balanceOf(voter) >= 100 * 10**18;
     }
 
@@ -29,15 +30,15 @@ contract Fweb3Poll {
     }
 
     function voteYes() public {
-        require(!hasVoted(msg.sender), "You already voted");
-        require(hasTokens(msg.sender), "Need 100 FWEB3 tokens to vote");
+        require(!hasVoted(msg.sender), alreadyVotedError);
+        require(hasTokens(msg.sender), notEnoughTokensError);
         yesVoters.push(payable(msg.sender));
         voters.push(payable(msg.sender));
     }
 
     function voteNo() public {
-        require(!hasVoted(msg.sender), "You already voted");
-        require(hasTokens(msg.sender), "Need 100 FWEB3 tokens to vote");
+        require(!hasVoted(msg.sender), alreadyVotedError);
+        require(hasTokens(msg.sender), notEnoughTokensError);
         voters.push(payable(msg.sender));
     }
 
