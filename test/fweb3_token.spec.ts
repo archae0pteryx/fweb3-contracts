@@ -10,10 +10,10 @@ let Fweb3ContractFactory: ContractFactory,
 
 describe('Fweb3 token deployment', async () => {
   beforeEach(async () => {
+    ;[owner, user1] = await ethers.getSigners()
     Fweb3ContractFactory = await ethers.getContractFactory('Fweb3Token')
     fweb3Token = await Fweb3ContractFactory.deploy()
     await fweb3Token.deployed()
-    ;[owner, user1] = await ethers.getSigners()
   })
   it('is created with some balance', async () => {
     const fweb3Balance = await fweb3Token.balanceOf(owner.address)

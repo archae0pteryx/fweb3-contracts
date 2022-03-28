@@ -22,5 +22,7 @@ describe('Fweb3 game deployment', async () => {
     fweb3Game = await Fweb3GameFactory.deploy(fweb3Token.address)
     await fweb3Game.deployed()
   })
-  it('creates game contract', async () => {})
+  it.only('creates game contract', async () => {
+    expect(true).to.equal(true)
+  })
 })
