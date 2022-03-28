@@ -1,6 +1,7 @@
 import { Contract, ContractFactory } from 'ethers'
 import hre from 'hardhat'
-import fs from 'fs-extra'
+
+import { writeAddressToFile } from './utils'
 
 const deployFweb3DiamondNFT = async (): Promise<string> => {
   try {
@@ -9,11 +10,8 @@ const deployFweb3DiamondNFT = async (): Promise<string> => {
     const fweb3DiamondNFT: Contract = await Fweb3DiamondNFTFactory.deploy()
     await fweb3DiamondNFT.deployed()
     const fweb3DiamondNFTAddress = fweb3DiamondNFT.address
+    writeAddressToFile('fweb3_diamond_nft', fweb3DiamondNFTAddress)
     console.log('diamond nft address:', fweb3DiamondNFTAddress)
-    fs.writeFileSync(
-      'deploy_addresses/fweb3_diamond_nft',
-      fweb3DiamondNFTAddress
-    )
     return fweb3DiamondNFTAddress
   } catch (e) {
     console.error(e)

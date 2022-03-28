@@ -9,9 +9,12 @@
     "test": "yarn hh test",
     "node": "yarn hh node",
     "coverage": "yarn build && yarn hh coverage --temp artifacts --network coverage",
-    "deploy": "yarn hh run scripts/deploy.ts",
+    "deploy": "SAVE_PATH=local yarn hh run scripts/deploy.ts",
+    "deploy:mumbai": "SAVE_PATH=mumbai yarn hh run scripts/deploy.ts --network mumbai",
+    "deploy:polygon": "SAVE_PATH=polygon yarn hh run scripts/deploy.ts --network polygon",
     "lint": "npx solhint contracts/**/*.sol",
-    "lint:fix": "npx solhint contracts/**/*.sol --fix"
+    "lint:fix": "npx solhint contracts/**/*.sol --fix",
+    "pretty": "npx prettier scripts test -w"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
