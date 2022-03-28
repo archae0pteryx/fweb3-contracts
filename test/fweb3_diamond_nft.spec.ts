@@ -1,37 +1,28 @@
 import { Contract, ContractFactory } from '@ethersproject/contracts'
-import {expect } from 'chai'
 import { ethers } from 'hardhat'
-// import {utils} from 'ethers'
+import { expect } from 'chai'
 
-import {mockDiamondNFT} from './__mocks__/mockDiamondNFT'
+import { mockDiamondNFT } from './__mocks__/mockDiamondNFT'
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
-let Fweb3DiamondNFTFactory, 
-  Fweb3TokenFactory: ContractFactory, 
-  fweb3Token, 
-  fweb3DiamondNFT: Contract, 
-  user1,
-  owner
-
-// const toWei = (num) => {
-//   return utils.formatEther(num, 'wei', {commify: true})
-// }
-
-// const toEther = (num) => {
-//   return utils.formatEther(num, 'ether', {commify: true})
-// }
+let Fweb3DiamondNFTFactory: ContractFactory,
+  Fweb3TokenFactory: ContractFactory,
+  fweb3Token: Contract,
+  fweb3DiamondNFT: Contract,
+  user1: SignerWithAddress,
+  owner: SignerWithAddress
 
 describe('Fweb3 token deployment', async () => {
   beforeEach(async () => {
-    ;[owner, user1]  = await ethers.getSigners()
+    ;[owner, user1] = await ethers.getSigners()
 
-    Fweb3TokenFactory = await ethers.getContractFactory('Fweb3')
+    Fweb3TokenFactory = await ethers.getContractFactory('Fweb3Token')
     fweb3Token = await Fweb3TokenFactory.deploy()
     await fweb3Token.deployed()
 
     Fweb3DiamondNFTFactory = await ethers.getContractFactory('Fweb3DiamondNFT')
     fweb3DiamondNFT = await Fweb3DiamondNFTFactory.deploy()
     await fweb3DiamondNFT.deployed()
-    
   })
   it('creates a diamond nft', async () => {
     await fweb3DiamondNFT.mint(1)
@@ -43,7 +34,9 @@ describe('Fweb3 token deployment', async () => {
     const imageBuffer = Buffer.from(imageBase64, 'base64')
     const svg = imageBuffer.toString()
     expect(tokenJSON.name).to.equal('Fweb3 Diamond NFT')
-    expect(tokenJSON.description).to.equal('This NFT represents participation in Fweb3 2022.')
+    expect(tokenJSON.description).to.equal(
+      'This NFT represents participation in Fweb3 2022.'
+    )
     expect(svg).to.equal(mockDiamondNFT)
   })
 })

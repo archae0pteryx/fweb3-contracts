@@ -33,6 +33,8 @@
     "fs-extra": "^10.0.1",
     "ganache-cli": "^6.12.2",
     "hardhat": "^2.9.2",
+    "prettier": "^2.6.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
     "solhint": "^3.3.7",
     "solidity-coverage": "^0.7.20",
     "ts-node": "^10.7.0",

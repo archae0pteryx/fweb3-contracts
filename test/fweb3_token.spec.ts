@@ -1,28 +1,24 @@
-import { expect } from 'chai'
-import { ethers } from 'hardhat'
-import {Contract, utils} from 'ethers'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
+import { Contract, ContractFactory, utils } from 'ethers'
+import { ethers } from 'hardhat'
+import { expect } from 'chai'
 
-let Fweb3ContractFactory, 
-  fweb3Token: Contract, 
-  owner: SignerWithAddress, 
+let Fweb3ContractFactory: ContractFactory,
+  fweb3Token: Contract,
+  owner: SignerWithAddress,
   user1: SignerWithAddress
-
-const toWei = (num: string): string => {
-  return utils.formatEther(num)
-}
 
 describe('Fweb3 token deployment', async () => {
   beforeEach(async () => {
-    Fweb3ContractFactory = await ethers.getContractFactory('Fweb3')
+    Fweb3ContractFactory = await ethers.getContractFactory('Fweb3Token')
     fweb3Token = await Fweb3ContractFactory.deploy()
     await fweb3Token.deployed()
     ;[owner, user1] = await ethers.getSigners()
   })
   it('is created with some balance', async () => {
     const fweb3Balance = await fweb3Token.balanceOf(owner.address)
-    const wei = await toWei(fweb3Balance)
-    expect(wei).to.equal('10000000.0')
+    const ethBalance = await utils.formatEther(fweb3Balance)
+    expect(ethBalance).to.equal('10000000.0')
   })
   it('will send tokens to another account', async () => {
     await fweb3Token.transfer(user1.address, 100)
