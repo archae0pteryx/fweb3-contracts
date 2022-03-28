@@ -3,10 +3,12 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "hardhat/console.sol";
 
 contract Fweb3Game is Ownable {
     IERC20 private _token;
     address[] judges;
+    address ownerAddress;
 
     struct playerDetails {
         bool isSeekingVerification;
@@ -22,6 +24,7 @@ contract Fweb3Game is Ownable {
 
     constructor(IERC20 token) {
         _token = token;
+        ownerAddress = msg.sender;
     }
 
     modifier judgeOnly() {
@@ -34,6 +37,9 @@ contract Fweb3Game is Ownable {
     }
 
     function isJudge(address judge) public view returns (bool) {
+        if (judge == ownerAddress) {
+            return true;
+        }
         bool contains = false;
         for (uint256 i = 0; i < judges.length; i++) {
             if (judge == judges[i]) {
@@ -65,14 +71,14 @@ contract Fweb3Game is Ownable {
         require(hasTokens(msg.sender), "Not enough tokens");
         require(hasBeenVerifiedToWin(msg.sender), "Not verified by a judge");
         require(hasNotWonBefore(msg.sender), "Have won before");
-        _token.transfer(msg.sender, 1000 * (10**18));
+        _token.transfer(msg.sender, 1000 * 10**18);
         players[msg.sender].hasWon = true;
         emit PlayerWon(msg.sender);
     }
 
     function verifyPlayer(address player) public judgeOnly {
-        removePlayerFromSeekingVerification(player);
         players[player].hasBeenVerifiedToWin = true;
+        removePlayerFromSeekingVerification(player);
         emit PlayerVerifiedToWin(player, msg.sender);
     }
 
@@ -95,5 +101,24 @@ contract Fweb3Game is Ownable {
 
     function removePlayerFromSeekingVerification(address player) internal {
         players[player].isSeekingVerification = false;
+    }
+
+    function getPlayer(address player)
+        public
+        judgeOnly
+        view
+        returns (
+            bool isSeekingVerification,
+            bool verifiedToWin,
+            bool hasWon,
+            address judgeApprovedBy
+        )
+    {   
+        return (
+            players[player].isSeekingVerification,
+            players[player].hasBeenVerifiedToWin,
+            players[player].hasWon,
+            players[player].judgeApprovedBy
+        );
     }
 }
