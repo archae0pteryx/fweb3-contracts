@@ -9,9 +9,7 @@
     "test": "yarn hh test",
     "node": "yarn hh node",
     "coverage": "yarn build && yarn hh coverage --temp artifacts --network coverage",
-    "deploy:all": "yarn deploy:gameToken && deploy:diamondNFT",
-    "deploy:gameToken": "yarn hh run scripts/fweb3_token_deploy.ts",
-    "deploy:diamondNFT": "yarn hh run scripts/fweb3_diamond_nft_deploy.ts",
+    "deploy": "yarn hh run scripts/deploy.ts",
     "lint": "npx solhint contracts/**/*.sol",
     "lint:fix": "npx solhint contracts/**/*.sol --fix"
   },
