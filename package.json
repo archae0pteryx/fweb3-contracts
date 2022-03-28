@@ -1,0 +1,42 @@
+{
+  "name": "fweb3-contracts",
+  "license": "MIT",
+  "scripts": {
+    "hh": "npx hardhat",
+    "clean": "yarn hh clean",
+    "build": "yarn clean && yarn compile",
+    "compile": "yarn hh compile",
+    "test": "yarn hh test",
+    "node": "yarn hh node",
+    "coverage": "yarn build && yarn hh coverage --temp artifacts --network coverage",
+    "deploy:all": "yarn deploy:gameToken && deploy:diamondNFT",
+    "deploy:gameToken": "yarn hh run scripts/fweb3_token_deploy.ts",
+    "deploy:diamondNFT": "yarn hh run scripts/fweb3_diamond_nft_deploy.ts",
+    "lint": "npx solhint contracts/**/*.sol",
+    "lint:fix": "npx solhint contracts/**/*.sol --fix"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.5.0",
+    "@typechain/ethers-v5": "^10.0.0",
+    "@typechain/hardhat": "^6.0.0",
+    "@types/chai": "^4.3.0",
+    "@types/fs-extra": "^9.0.13",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.23",
+    "chai": "^4.3.6",
+    "dotenv": "^16.0.0",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.2",
+    "fs-extra": "^10.0.1",
+    "ganache-cli": "^6.12.2",
+    "hardhat": "^2.9.2",
+    "solhint": "^3.3.7",
+    "solidity-coverage": "^0.7.20",
+    "ts-node": "^10.7.0",
+    "typechain": "^8.0.0",
+    "typescript": "^4.6.3"
+  }
+}
