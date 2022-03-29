@@ -11,7 +11,7 @@ const deployFweb3DiamondNFT = async (): Promise<string> => {
     await fweb3DiamondNFT.deployed()
     const fweb3DiamondNFTAddress = fweb3DiamondNFT.address
     writeAddressToFile('fweb3_diamond_nft', fweb3DiamondNFTAddress)
-    console.log('diamond nft address:', fweb3DiamondNFTAddress)
+    console.log('diamond diamond nft address:', fweb3DiamondNFTAddress)
     return fweb3DiamondNFTAddress
   } catch (e) {
     console.error(e)
