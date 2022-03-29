@@ -14,13 +14,13 @@ let fweb3Poll: Contract,
 describe('Fweb3 Poll Contract', () => {
   beforeEach(async () => {
     ;[owner, user1, user2] = await ethers.getSigners()
-    const Fweb3ContractFactory: ContractFactory = await ethers.getContractFactory('Fweb3Token')
+    const Fweb3ContractFactory: ContractFactory =
+      await ethers.getContractFactory('Fweb3Token')
     fweb3Token = await Fweb3ContractFactory.deploy()
     await fweb3Token.deployed()
     await fweb3Token.transfer(user1.address, utils.parseEther('100'))
-    const Fweb3PollContractFactory: ContractFactory = await ethers.getContractFactory(
-      'Fweb3Poll'
-    )
+    const Fweb3PollContractFactory: ContractFactory =
+      await ethers.getContractFactory('Fweb3Poll')
     fweb3Poll = await Fweb3PollContractFactory.deploy(fweb3Token.address)
     await fweb3Token.deployed()
 
