@@ -1,5 +1,8 @@
 # Fweb3 Game Contracts
 
+- node 16
+- typescript 4
+- hardhat 2.9
 ### Development
 
 ```bash
@@ -15,5 +18,5 @@ yarn coverage
 # deployment
 # fill out env vars from example
 yarn hh node
-yarn deploy:<null|mumbai|polygon>
+yarn deploy:<local|mumbai|polygon>
 ```
